@@ -6,7 +6,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         NSDistributedNotificationCenter.defaultCenter()
-            .addObserver(self, selector: Selector("recievedDistributedNotification:"), name: nil, object: nil)
+            .addObserver(self, selector: Selector("recievedDistributedNotification:"), name: "io.github.0942v8653.ScriptableStatusBar", object: nil)
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {
@@ -14,17 +14,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func recievedDistributedNotification(notification: NSNotification) {
-        if notification.name == "io.github.0942v8653.ScriptableStatusBar" {
-            println(notification)
-            let dict = notification.userInfo as Dictionary<String, AnyObject>
-            let identifier = dict["identifier"] as String
-            if dict["action"] as String == "remove" {
-                self.removeStatusBarItem(identifier)
-            } else {
-                self.setStatusBarItem(identifier,
-                    title: dict["title"] as String,
-                    menuItems: dict["menuItems"] as Dictionary<String, String>)
-            }
+        println(notification)
+        let dict = notification.userInfo as Dictionary<String, AnyObject>
+        let identifier = dict["identifier"] as String
+        if dict["action"] as String == "remove" {
+            self.removeStatusBarItem(identifier)
+        } else {
+            self.setStatusBarItem(identifier,
+                title: dict["title"] as String,
+                menuItems: dict["menuItems"] as Dictionary<String, String>)
         }
     }
     
