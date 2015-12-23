@@ -14,15 +14,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func recievedDistributedNotification(notification: NSNotification) {
-        println(notification)
-        let dict = notification.userInfo as Dictionary<String, AnyObject>
-        let identifier = dict["identifier"] as String
-        if dict["action"] as String == "remove" {
+        print(notification)
+        let dict = notification.userInfo as! Dictionary<String, AnyObject>
+        let identifier = dict["identifier"] as! String
+        if dict["action"] as! String == "remove" {
             self.removeStatusBarItem(identifier)
         } else {
             self.setStatusBarItem(identifier,
-                title: dict["title"] as String,
-                menuItems: dict["menuItems"] as Dictionary<String, String>)
+                title: dict["title"] as! String,
+                menuItems: dict["menuItems"] as! Dictionary<String, String>)
         }
     }
     
@@ -43,7 +43,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         statusItem.title = title
         if menuItems.count > 0 {
-            println(menuItems)
+            print(menuItems)
             let menu = NSMenu(title: title)
             menu.autoenablesItems = false
             for (menuItemTitle, shellScript) in menuItems {
